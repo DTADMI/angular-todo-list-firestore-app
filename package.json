@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular-todo-list-firestore-api": "node dist/angular-todo-list-firestore-api/server/server.mjs"
+    "serve:ssr:angular-todo-list-firestore-api": "node dist/server/server.mjs",
+    "serve": "firebase serve --only hosting",
+    "deploy": "firebase deploy --only hosting"
   },
   "private": true,
   "dependencies": {
