@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-todo-list-firestore-api": {
+    "angular-todo-list-firestore-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/angular-todo-list-firestore-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-todo-list-firestore-api:build:production"
+              "buildTarget": "angular-todo-list-firestore-app:build:production"
             },
             "development": {
-              "buildTarget": "angular-todo-list-firestore-api:build:development"
+              "buildTarget": "angular-todo-list-firestore-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angular-todo-list-firestore-api:build"
+            "buildTarget": "angular-todo-list-firestore-app:build"
           }
         },
         "test": {

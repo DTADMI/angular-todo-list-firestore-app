@@ -10,5 +10,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'angular-todo-list-firestore-api';
+  title = 'angular-todo-list-firestore-app';
 }
