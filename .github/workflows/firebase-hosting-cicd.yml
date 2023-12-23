@@ -24,9 +24,8 @@ jobs:
           name: dist
           path: ./dist
       - name: Deploy angular app to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: w9jds/firebase-action@master
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_REACT_INTERPERSONAL_MAP }}'
-          channelId: live
-          projectId: react-interpersonal-map
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
