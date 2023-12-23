@@ -26,5 +26,5 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_REACT_INTERPERSONAL_MAP }}'
-          channelId: live
+          channelId: staging
           projectId: react-interpersonal-map
