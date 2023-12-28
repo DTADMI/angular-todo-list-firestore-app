@@ -13,7 +13,6 @@ jobs:
         uses: oNaiPs/secrets-to-env-action@v1
         with:
           secrets: ${{ toJSON(secrets) }}
-          variables: ${{ toJSON(vars)}}
       - name: Setup node
         uses: actions/setup-node@master
         with:
