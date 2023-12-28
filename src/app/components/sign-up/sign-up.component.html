@@ -1,0 +1,98 @@
+<form [formGroup]="signupForm" (ngSubmit)="signup()">
+  <p-card header="Register" [style]="{ width: '360px' }">
+    <div class="field">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="name"
+        class="w-full"
+        id="name"
+        name="name"
+        placeholder="Type your name"
+      />
+      <small
+        *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="name.errors?.['required']">Name is required.</div>
+        <div *ngIf="name.errors?.['pattern']">Your name should only contain letters and spaces</div>
+      </small>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="email"
+        class="w-full"
+        id="email"
+        name="email"
+        placeholder="Type your email"
+      />
+      <small
+        *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="email.errors?.['required']">Email is required.</div>
+        <div *ngIf="email.errors?.['email']">Your email should be validly formatted</div>
+      </small>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="password"
+        class="w-full"
+        id="password"
+        name="password"
+        placeholder="Type your password"
+      />
+      <small
+        *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="block p-error"
+      >
+        <div *ngIf="password.errors?.['required']">Password is required.</div>
+        <div *ngIf="password.errors?.['pattern']">Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</div>
+      </small>
+    </div>
+    <div class="field">
+      <label for="confirmPassword">Confirm your password</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="confirmPassword"
+        class="w-full"
+        id="confirmPassword"
+        name="confirmPassword"
+        placeholder="Confirm Password"
+      />
+      <small
+        *ngIf="
+          confirmPassword.invalid &&
+          (confirmPassword.dirty || confirmPassword.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="confirmPassword.errors?.['required']">
+          Confirm your password
+        </div>
+        <div *ngIf="password.errors?.['pattern']">Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</div>
+      </small>
+      <small
+        class="block p-error"
+        *ngIf="signupForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid"
+      >
+        Password should match
+      </small>
+    </div>
+    <p-button
+      label="Sign Up"
+      styleClass="w-full"
+      [disabled]="signupForm.invalid"
+      type="submit"
+    ></p-button>
+    <div class="mt-2">Already have an account? <a routerLink="/signin">Sign in</a></div>
+  </p-card>
+</form>

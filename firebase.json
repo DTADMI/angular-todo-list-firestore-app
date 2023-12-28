@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "darryltadmi-todo-list-angular",
     "public": "dist/angular-todo-list-firestore-app/browser",
     "ignore": [
       "firebase.json",
