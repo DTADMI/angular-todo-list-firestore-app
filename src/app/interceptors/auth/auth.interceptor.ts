@@ -5,17 +5,19 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {inject} from "@angular/core";
+import {CookieService} from "ngx-cookie-service";
 import {AuthService} from "../../services/auth/auth.service";
 
 export const authInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
-    debugger;
-    const authService = inject(AuthService);
-    const accessToken = authService.accessTokenSig();
-    //const accessToken = authService.accessToken$$.getValue();
+    const authService : AuthService = inject(AuthService);
+    const cookieService : CookieService = inject(CookieService);
+    const accessToken = cookieService.get("accessToken");
+    const csrfToken = authService.csrfTokenSig();
     const newCloneRequest = request.clone({
       setHeaders:{
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
+        "X-XSRF-TOKEN": `${csrfToken}`
       }
-    })
+    });
     return next(newCloneRequest);
 }

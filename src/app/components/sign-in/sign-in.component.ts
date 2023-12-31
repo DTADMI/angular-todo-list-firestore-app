@@ -9,6 +9,7 @@ import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
 import {NgIf} from "@angular/common";
 import {ButtonModule} from "primeng/button";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-sign-in',
@@ -30,6 +31,7 @@ import {ButtonModule} from "primeng/button";
 export class SignInComponent {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private authService: AuthService = inject(AuthService);
+  private cookieService: CookieService = inject(CookieService);
   private router: Router = inject(Router);
   private messageService: MessageService = inject(MessageService);
   private loggerService: LoggerService = inject(LoggerService);
@@ -51,25 +53,16 @@ export class SignInComponent {
         if(res.data) {
           this.loggerService.log('login Success');
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successfully' });
-          this.authService.accessTokenSig.set(res.data.token);
-          this.authService.userIdSig.set(res.data.uid);
-          this.authService.accessToken$$.next(res.data.token);
-          this.authService.userId$$.next(res.data.uid);
-          this.router.navigateByUrl('/todolist');
+          this.authService.setAllToken(res.data.token, res.data.user.uid, this.cookieService.get("__session"), "");
+          this.router.navigateByUrl('/todolist/');
         } else {
-          this.authService.accessTokenSig.set("");
-          this.authService.userIdSig.set("");
-          this.authService.accessToken$$.next("");
-          this.authService.userId$$.next("");
+          this.authService.setAllToken("", "", "", "");
           this.loggerService.error(res.message);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
         }
       },
       error: (error) => {
-        this.authService.accessTokenSig.set("");
-        this.authService.userIdSig.set("");
-        this.authService.accessToken$$.next("");
-        this.authService.userId$$.next("");
+        this.authService.setAllToken("", "", "", "");
         this.loggerService.error(JSON.stringify(error));
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
       }
