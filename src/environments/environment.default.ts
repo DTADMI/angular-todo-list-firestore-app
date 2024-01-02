@@ -8,7 +8,7 @@ export const defaultEnvironment = {
       appId: process.env['NG_APP_FIREBASE_APP_ID'],
       measurementId: process.env['NG_APP_FIREBASE_MEASUREMENT_ID']
     },
-    serverUrl: "https://node-todo-list-api.web.app/todolist",
-    authServerUrl: "https://node-todo-list-api.web.app/auth",
+    serverUrl: "http://localhost:7007/todolist",
+    authServerUrl: "http://localhost:7007/auth",
     production: false
 };

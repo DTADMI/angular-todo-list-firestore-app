@@ -10,7 +10,6 @@ import {InputTextModule} from "primeng/inputtext";
 import {ButtonModule} from "primeng/button";
 import {NgIf} from "@angular/common";
 import {SignInUser} from "../../interfaces/sign-in";
-import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-sign-up',
@@ -32,7 +31,6 @@ import {CookieService} from "ngx-cookie-service";
 export class SignUpComponent {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private authService: AuthService = inject(AuthService);
-  private cookieService: CookieService = inject(CookieService);
   private router: Router = inject(Router);
   private messageService: MessageService = inject(MessageService);
   private loggerService: LoggerService = inject(LoggerService);
@@ -70,16 +68,16 @@ export class SignUpComponent {
         if(res.data) {
           this.loggerService.log('signup Success');
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signup successful' });
-          this.authService.setAllToken(res.data.token, res.data.user.uid, this.cookieService.get("__session"), "");
+          this.authService.setAllToken(res.data.token, res.data.user.uid, "");
           this.router.navigateByUrl('/todolist/');
         } else {
-          this.authService.setAllToken("", "", "", "");
+          this.authService.setAllToken("", "", "");
           this.loggerService.error(res.message);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: res.message });
         }
       },
       error: (error) => {
-        this.authService.setAllToken("", "", "", "");
+        this.authService.setAllToken("", "", "");
         this.loggerService.error(JSON.stringify(error));
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
       }

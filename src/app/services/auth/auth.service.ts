@@ -3,25 +3,18 @@ import {HttpClient} from "@angular/common/http";
 import {SignInUser} from "../../interfaces/sign-in";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
-import {CookieOptions, CookieService} from "ngx-cookie-service";
+import {SessionStorageService} from "angular-web-storage";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private http: HttpClient = inject(HttpClient);
-  private cookieService: CookieService = inject(CookieService);
+  private sessionStorageService: SessionStorageService = inject(SessionStorageService);
   private router: Router = inject(Router);
 
+  userIdTokenSig = signal<string>("");
   csrfTokenSig = signal<string>("");
-  private expiresIn = 60*60*1*1*1000;
-  private cookieOptions: CookieOptions = {
-    sameSite: "None",
-    secure:true,
-    expires: this.expiresIn,
-    path: "/",
-    domain: "https://darryltadmi-todo-list-angular.web.app/"
-  };
 
   generateCsrfToken(){
     return this.http.get(environment.authServerUrl + '/csrfToken', {withCredentials: true});
@@ -36,16 +29,15 @@ export class AuthService {
   }
 
   logout(){
-    this.http.post(environment.authServerUrl + '/logout', {}).subscribe(() =>{
-      this.setAllToken("","","","")
-      //this.router.navigateByUrl('/signin/');
+    this.http.post(environment.authServerUrl + '/logout', {}, {withCredentials: true}).subscribe(() =>{
+      this.setAllToken("","","");
+      this.router.navigateByUrl('/signin/');
     })
   }
 
-  setAllToken(accessToken: string, userId: string,sessionToken: string, csrfToken: string) {
-    this.cookieService.set("__session", sessionToken, this.cookieOptions);
-    this.cookieService.set("accessToken", accessToken, this.cookieOptions);
-    this.cookieService.set("userId", userId, this.cookieOptions);
+  setAllToken(accessToken: string, userId: string, csrfToken: string) {
+    this.sessionStorageService.set("accessToken", accessToken, 1, "h");
+    this.userIdTokenSig.set(userId);
     this.csrfTokenSig.set(csrfToken);
   }
 
@@ -53,31 +45,40 @@ export class AuthService {
     this.csrfTokenSig.set(csrfToken);
   }
 
-  setSessionToken(sessionToken: string) {
-    this.cookieService.set("__session", sessionToken, this.cookieOptions);
-  }
-
   setAccessToken(accessToken: string) {
-    this.cookieService.set("accessToken", accessToken, this.cookieOptions);
+    this.sessionStorageService.set("accessToken", accessToken, 1, "h");
   }
 
   setUserId(userId: string) {
-    this.cookieService.set("userId", userId, this.cookieOptions);
+    this.userIdTokenSig.set(userId);
   }
 
   getCsrfToken() {
     return this.csrfTokenSig();
   }
 
-  getSessionToken() {
-    return this.cookieService.get("__session");
-  }
 
   getAccessToken() {
-    return this.cookieService.get("accessToken");
+    return this.sessionStorageService.get("accessToken");
   }
 
   getUserId() {
-    return this.cookieService.get("userId");
+    return this.userIdTokenSig();
+  }
+
+  clearAllToken(){
+    this.sessionStorageService.clear();
+  }
+
+  clearAccessToken(){
+    this.sessionStorageService.remove("accessToken");
+  }
+
+  clearUserId(){
+    this.userIdTokenSig.set("");
+  }
+
+  clearCsrfToken(){
+    this.csrfTokenSig.set("");
   }
 }
