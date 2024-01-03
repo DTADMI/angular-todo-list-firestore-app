@@ -16,7 +16,6 @@ export const authInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>
       setHeaders:{
         Authorization: `Bearer ${accessToken}`,
         "X-XSRF-TOKEN": `${csrfToken}`,
-        //"Access-Control-Allow-Origin": [environment.serverBaseUrl, environment.clientBaseUrl]
       }
     });
     return next(newCloneRequest);

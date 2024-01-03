@@ -23,7 +23,6 @@ export class TodoListComponent implements OnInit {
 
 
   logOut() {
-    debugger;
     this.authService.logout();
   }
 
