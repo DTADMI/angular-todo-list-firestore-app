@@ -19,7 +19,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
       if(errorStatus === 404){
         loggerService.error(errorMessage || "Resource not found");
-        router.navigateByUrl('/not-found');
+        router.navigate(['not-found']);
       }
       loggerService.error(errorMessage)
       return throwError(() => error);

@@ -6,6 +6,7 @@ import {
 import { Observable } from 'rxjs';
 import {inject} from "@angular/core";
 import {AuthService} from "../../services/auth/auth.service";
+import {environment} from "../../../environments/environment";
 
 export const authInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
     const authService : AuthService = inject(AuthService);
@@ -14,7 +15,8 @@ export const authInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>
     const newCloneRequest = request.clone({
       setHeaders:{
         Authorization: `Bearer ${accessToken}`,
-        "X-XSRF-TOKEN": `${csrfToken}`
+        "X-XSRF-TOKEN": `${csrfToken}`,
+        //"Access-Control-Allow-Origin": [environment.serverBaseUrl, environment.clientBaseUrl]
       }
     });
     return next(newCloneRequest);

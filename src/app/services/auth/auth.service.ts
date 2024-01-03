@@ -4,6 +4,7 @@ import {SignInUser} from "../../interfaces/sign-in";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {SessionStorageService} from "angular-web-storage";
+import {LoggerService} from "../logger/logger.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,14 @@ import {SessionStorageService} from "angular-web-storage";
 export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private sessionStorageService: SessionStorageService = inject(SessionStorageService);
+  private loggerService: LoggerService = inject(LoggerService);
   private router: Router = inject(Router);
 
   userIdTokenSig = signal<string>("");
   csrfTokenSig = signal<string>("");
 
   generateCsrfToken(){
-    return this.http.get(environment.authServerUrl + '/csrfToken', {withCredentials: true});
+    return this.http.get<{csrfToken: string}>(environment.authServerUrl + '/csrfToken', {withCredentials: true});
   }
 
   register(user: SignInUser){
@@ -29,10 +31,17 @@ export class AuthService {
   }
 
   logout(){
-    this.http.post(environment.authServerUrl + '/logout', {}, {withCredentials: true}).subscribe(() =>{
-      this.setAllToken("","","");
-      this.router.navigateByUrl('/signin/');
-    })
+    this.http.post(environment.authServerUrl + '/logout', null, { withCredentials: true, responseType: "text"}).subscribe({
+      next: (message: string) =>{
+        this.loggerService.log(message);
+        this.setAllToken("","","");
+        this.sessionStorageService.clear();
+        this.router.navigate(['signin']);
+      },
+      error: (error) =>{
+        this.loggerService.error(`Error while logging out : ${JSON.stringify(error)}`)
+      }
+    });
   }
 
   setAllToken(accessToken: string, userId: string, csrfToken: string) {

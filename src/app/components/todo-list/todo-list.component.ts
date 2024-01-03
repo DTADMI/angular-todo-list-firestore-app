@@ -19,30 +19,32 @@ export class TodoListComponent implements OnInit {
   private loggerService: LoggerService = inject(LoggerService);
   private tasksService: TasksService = inject(TasksService);
   private tasks = signal<Task[]>([]);
-  private paginatedResults: TaskResult = {} as TaskResult;
+  private paginatedResults = signal<TaskResult>({} as TaskResult);
 
 
   logOut() {
+    debugger;
     this.authService.logout();
   }
 
   ngOnInit(): void {
     this.authService.generateCsrfToken()
       .subscribe({
-      next: (tokenObject: any) => {
-        const csrfToken: string = tokenObject.csrfToken as string;
+      next: (tokenObject: {csrfToken: string}) => {
+        const csrfToken: string = tokenObject.csrfToken;
         this.authService.setCsrfToken(csrfToken);
         this.tasksService.getTasks(1)
           .subscribe({
-          next: (json: any) => {
-            this.tasks.set(json.data as Task[]);
-            this.loggerService.log(`tasks: ${JSON.stringify(this.tasks())}`)
+          next: (taskResult: TaskResult) => {
+            this.paginatedResults.set(taskResult);
+            this.tasks.set(taskResult.data);
+            this.loggerService.log(`paginatedResults: ${JSON.stringify(this.paginatedResults())}`);
+            this.loggerService.log(`tasks: ${JSON.stringify(this.tasks())}`);
           },
           error: (err) => {
             this.loggerService.error(err);
           }
-          }
-        );
+        });
       },
       error: (err) => {
         this.loggerService.error(err);

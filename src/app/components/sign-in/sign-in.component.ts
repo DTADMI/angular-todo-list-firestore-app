@@ -52,7 +52,7 @@ export class SignInComponent {
           this.loggerService.log('login Success');
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successfully' });
           this.authService.setAllToken(res.data.token, res.data.user.uid, "");
-          this.router.navigateByUrl('/todolist/');
+          this.router.navigate(['todolist']);
         } else {
           this.authService.setAllToken("", "", "");
           this.loggerService.error(res.message);

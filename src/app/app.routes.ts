@@ -7,23 +7,23 @@ import {SignUpComponent} from "./components/sign-up/sign-up.component";
 
 export const routes: Routes = [
   {
-    path: 'signin/',
+    path: 'signin',
     title: 'Log in',
     component: SignInComponent
   },
   {
-    path: 'signup/',
+    path: 'signup',
     title: 'Register',
     component: SignUpComponent
   },
   {
-    path: 'todolist/',
+    path: 'todolist',
     title: 'To Do List',
     component: TodoListComponent,
     canActivate: [authGuard]
   },
   {
-    path: 'not-found/',
+    path: 'not-found',
     title: 'Not Found',
     component: NotFoundComponent,
     canActivate: [authGuard]
