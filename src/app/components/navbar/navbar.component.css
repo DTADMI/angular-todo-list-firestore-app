@@ -1,7 +1,6 @@
 
 
 .active {
-  /*bg-blue-700,*/
   @media screen and (min-width: 768px) {
     .md\:bg-transparent {
       background-color: transparent !important;
@@ -10,10 +9,4 @@
   border-bottom: 2px solid #7c3aed;
   transform: scale(1.1);
   transition: border-bottom 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  /*md:text-blue-700,
-  md:dark:text-blue-500*/
-}/*{
-  border-bottom: 2px solid #7c3aed;
-  transform: scale(1.1);
-  transition: border-bottom 0.3s ease, color 0.3s ease, transform 0.3s ease;
-}*/
+}
