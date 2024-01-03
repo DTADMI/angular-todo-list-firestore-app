@@ -6,7 +6,6 @@ import {
 import { Observable } from 'rxjs';
 import {inject} from "@angular/core";
 import {AuthService} from "../../services/auth/auth.service";
-import {environment} from "../../../environments/environment";
 
 export const authInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
     const authService : AuthService = inject(AuthService);

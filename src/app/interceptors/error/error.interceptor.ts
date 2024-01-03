@@ -15,7 +15,17 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       const errorStatus = error.status;
       if([401, 403].includes(errorStatus)){
         loggerService.error("Unauthorized request");
-        authService.logout();
+        authService.logout()
+          .subscribe({
+            next: (message: string) =>{
+              loggerService.log(message);
+              authService.clearAllToken();
+              router.navigate(['unauthorized']);
+            },
+            error: (error) =>{
+              loggerService.error(`Error while logging out : ${JSON.stringify(error)}`)
+            }
+          });
       }
       if(errorStatus === 404){
         loggerService.error(errorMessage || "Resource not found");

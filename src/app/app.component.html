@@ -1,4 +1,25 @@
 <div class="flex justify-content-center align-items-center h-full">
-  <router-outlet></router-outlet>
-  <p-toast></p-toast>
+  <div class="display-container w-full">
+    @if (isUserAuthenticatedSig()) {
+      <app-navbar></app-navbar>
+    }
+    @if (showLoaderSig()) {
+      <app-loading></app-loading>
+    } @else {
+      <router-outlet></router-outlet>
+    }
+    <p-toast>
+      @if (!!successMessageSig()) {
+        <div
+          class="alert alert-success">
+            {{ successMessageSig() }}
+        </div>
+      }
+      @if (!!errorMessageSig()) {
+        <div class="alert alert-danger">
+          {{ errorMessageSig() }}
+        </div>
+      }
+    </p-toast>
+  </div>
 </div>
