@@ -1,17 +1,14 @@
-export interface BaseTask {
+export interface Task {
+  id: string;
   name: string;
   description?: string;
+  creationDate: string;
+  lastModificationDate?: string;
   isDone: boolean;
   dueDate?: string;
   subtasks?: Array<string>;
   superTask?: string;
   userId: string
-}
-
-export interface Task extends BaseTask {
-  id: string;
-  creationDate: string;
-  lastModificationDate?: string;
   uri?: string
 }
 

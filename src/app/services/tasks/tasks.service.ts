@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {BaseTask, Task, TaskResult} from "../../interfaces/task";
-import {retry} from "rxjs";
+import { Task, TaskResult } from "../../interfaces/task";
+import {Observable, retry} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -24,15 +24,15 @@ export class TasksService {
     return this.http.get<Task>(environment.serverUrl + `/tasks/name/${taskName}`, {withCredentials: true});
   }
 
-  createTask(task: BaseTask) {
+  createTask(task: Partial<Task>): Observable<Task> {
     return this.http.post<Task>(environment.serverUrl + `/tasks/task`, task, {withCredentials: true});
   }
 
-  updateTask(task: BaseTask) {
+  updateTask(task: Partial<Task>): Observable<Task> {
     return this.http.post<Task>(environment.serverUrl + `/tasks`, task, {withCredentials: true});
   }
 
-  updateTasksSubtasks(task: Task) {
+  updateTasksSubtasks(task: Partial<Task>) {
     return this.http.post<Task>(environment.serverUrl + `/tasks`, task, {withCredentials: true});
   }
 

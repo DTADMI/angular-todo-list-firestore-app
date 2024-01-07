@@ -1,25 +1,19 @@
-<div class="flex justify-content-center align-items-center h-full">
-  <div class="display-container w-full">
-    @if (isUserAuthenticatedSig()) {
-      <app-navbar></app-navbar>
-    }
-    @if (showLoaderSig()) {
-      <app-loading></app-loading>
-    } @else {
-      <router-outlet></router-outlet>
-    }
-    <p-toast>
-      @if (!!successMessageSig()) {
-        <div
-          class="alert alert-success">
-            {{ successMessageSig() }}
-        </div>
-      }
-      @if (!!errorMessageSig()) {
-        <div class="alert alert-danger">
-          {{ errorMessageSig() }}
-        </div>
-      }
-    </p-toast>
+<!--@if (showLoaderSig()) {
+  <div class="flex justify-content-center align-items-center h-full">
+    <app-loading></app-loading>
   </div>
-</div>
+} @else {-->
+  <div class="flex justify-content-center align-items-center h-full">
+    <div class="display-container w-full">
+      @if (isUserAuthenticatedSig()) {
+        <app-navbar></app-navbar>
+      }
+      @if (showLoaderSig()) {
+        <app-loading></app-loading>
+      } @else {
+        <router-outlet></router-outlet>
+        <app-alert></app-alert>
+      }
+    </div>
+  </div>
+<!--}-->

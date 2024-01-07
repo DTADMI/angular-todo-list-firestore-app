@@ -16,7 +16,7 @@ export class UnauthorizedComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private loggerService: LoggerService = inject(LoggerService);
   ngOnInit(): void {
-    if(this.authService.isUserLoggedIn()) {
+    if(this.authService.isUserLoggedInSig()) {
       this.authService.logout()
         .subscribe({
           next: (message: string) =>{

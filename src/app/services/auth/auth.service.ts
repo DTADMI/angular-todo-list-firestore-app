@@ -17,7 +17,7 @@ export class AuthService {
 
   userIdTokenSig = signal<string>("");
   csrfTokenSig = signal<string>("");
-  isLoggedInSig : Signal<boolean> = computed(() => !!this.userIdTokenSig() && !!this.sessionStorageService.get("accessToken"))
+  isUserLoggedInSig = signal<boolean>(false);
   private redirectUrl: string = "";
 
   generateCsrfToken(){
@@ -48,6 +48,7 @@ export class AuthService {
 
   setAccessToken(accessToken: string) {
     this.sessionStorageService.set("accessToken", accessToken, 1, "h");
+    accessToken ? this.isUserLoggedInSig.set(true) : this.isUserLoggedInSig.set(false);
   }
 
   setUserId(userId: string) {
@@ -70,10 +71,12 @@ export class AuthService {
   clearAllToken(){
     this.setAllToken("","","");
     this.sessionStorageService.clear();
+    this.isUserLoggedInSig.set(false);
   }
 
   clearAccessToken(){
     this.sessionStorageService.remove("accessToken");
+    this.isUserLoggedInSig.set(false);
   }
 
   clearUserId(){
@@ -82,10 +85,6 @@ export class AuthService {
 
   clearCsrfToken(){
     this.csrfTokenSig.set("");
-  }
-
-  isUserLoggedIn() {
-    return !!this.getUserId() && !!this.getAccessToken();
   }
 
   getRedirectUrl(): string {

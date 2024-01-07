@@ -2,8 +2,8 @@
   position: fixed;
   width: 10vw;
   height: 10vh;
-  background-color: #fff;
-  border: 1px solid #eee;
+  background-color: var(--bs-body-color);
+  border: 1px solid var(--bs-body-color);
   top: 45vh;
   left: 45vw;
   z-index: 999;

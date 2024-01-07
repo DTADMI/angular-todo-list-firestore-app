@@ -1,98 +1,115 @@
 <form [formGroup]="signupForm" (ngSubmit)="signup()">
-  <p-card header="Register" [style]="{ width: '360px' }">
-    <div class="field">
-      <label for="name">Name</label>
+  <div [style]="{ maxWidth: '360px', minWidth: '360px' }" class="lg:w-2/6 md:w-1/2 bg-gray-900 bg-opacity-50 rounded-lg gap-2 p-4 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+    <h2 class="text-white text-lg font-medium title-font mb-5">Sign Up</h2>
+    <div class="relative">
+      <label for="name" class="leading-7 text-sm text-gray-400">Name</label>
       <input
         type="text"
-        pInputText
         formControlName="name"
-        class="w-full"
         id="name"
         name="name"
         placeholder="Type your name"
+        class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-purple-900 rounded border border-gray-600 focus:border-purple-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        data-np-intersection-state="observed"
       />
-      <small
-        *ngIf="name.invalid && (name.dirty || name.touched)"
-        class="block p-error"
-      >
-        <div *ngIf="name.errors?.['required']">Name is required.</div>
-        <div *ngIf="name.errors?.['pattern']">Your name should only contain letters and spaces</div>
-      </small>
+      @if(name.invalid && (name.dirty || name.touched)){
+        <small
+          class="block p-error"
+        >
+          @if(name.errors?.['required']){
+            <div>Name is required.</div>
+          }
+          @if(name.errors?.['pattern']){
+            <div>Your name should only contain letters and spaces</div>
+          }
+        </small>
+      }
     </div>
-    <div class="field">
-      <label for="email">Email</label>
+    <div class="relative ">
+      <label for="email" class="leading-7 text-sm text-gray-400">Email</label>
       <input
         type="text"
-        pInputText
         formControlName="email"
-        class="w-full"
         id="email"
         name="email"
         placeholder="Type your email"
+        class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-purple-900 rounded border border-gray-600 focus:border-purple-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        data-np-intersection-state="observed"
       />
-      <small
-        *ngIf="email.invalid && (email.dirty || email.touched)"
-        class="block p-error"
-      >
-        <div *ngIf="email.errors?.['required']">Email is required.</div>
-        <div *ngIf="email.errors?.['email']">Your email should be validly formatted</div>
-      </small>
+      @if (email.invalid && (email.dirty || email.touched)) {
+        <small
+          class="block p-error"
+        >
+          @if (email.errors?.['required']) {
+            <div>Email is required.</div>
+          }
+          @if (email.errors?.['email']) {
+            <div>Your email should be validly formatted</div>
+          }
+        </small>
+      }
     </div>
-    <div class="field">
-      <label for="password">Password</label>
+    <div class="relative ">
+      <label for="password" class="leading-7 text-sm text-gray-400">Password</label>
       <input
         type="password"
-        pInputText
         formControlName="password"
-        class="w-full"
         id="password"
         name="password"
         placeholder="Type your password"
+        class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-purple-900 rounded border border-gray-600 focus:border-purple-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        data-np-intersection-state="observed"
       />
-      <small
-        *ngIf="password.invalid && (password.dirty || password.touched)"
-        class="block p-error"
-      >
-        <div *ngIf="password.errors?.['required']">Password is required.</div>
-        <div *ngIf="password.errors?.['pattern']">Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</div>
-      </small>
+      @if(password.invalid && (password.dirty || password.touched)){
+        <small
+          class="block p-error"
+        >
+          @if(password.errors?.['required']){
+            <div>Password is required.</div>
+          }
+          @if(password.errors?.['pattern']){
+            <div>Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</div>
+          }
+        </small>
+      }
     </div>
-    <div class="field">
-      <label for="confirmPassword">Confirm your password</label>
+    <div class="relative ">
+      <label for="confirmPassword" class="leading-7 text-sm text-gray-400">Confirm your password</label>
       <input
         type="password"
-        pInputText
         formControlName="confirmPassword"
-        class="w-full"
         id="confirmPassword"
         name="confirmPassword"
-        placeholder="Confirm Password"
+        placeholder="Confirm your password"
+        class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-purple-900 rounded border border-gray-600 focus:border-purple-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        data-np-intersection-state="observed"
       />
-      <small
-        *ngIf="
-          confirmPassword.invalid &&
-          (confirmPassword.dirty || confirmPassword.touched)
-        "
-        class="block p-error"
-      >
-        <div *ngIf="confirmPassword.errors?.['required']">
-          Confirm your password
-        </div>
-        <div *ngIf="password.errors?.['pattern']">Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</div>
-      </small>
-      <small
-        class="block p-error"
-        *ngIf="signupForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid"
-      >
-        Password should match
-      </small>
+      @if(confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)){
+        <small
+          class="block p-error"
+        >
+          @if(confirmPassword.errors?.['required']){
+            <div>Confirm your password.</div>
+          }
+          @if(confirmPassword.errors?.['pattern']){
+            <div>Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.</div>
+          }
+        </small>
+      }
+      @if(signupForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid){
+        <small
+          class="block p-error"
+        >
+          Password should match
+        </small>
+      }
     </div>
-    <p-button
-      label="Sign Up"
-      styleClass="w-full"
+    <button
+      [style]="{ textWrap: 'nowrap' }"
+      class="text-white bg-purple-500 border-0 py-2 px-8 w-full mt-2 focus:outline-none hover:bg-purple-600 rounded text-lg"
       [disabled]="signupForm.invalid"
       type="submit"
-    ></p-button>
-    <div class="mt-2">Already have an account? <a routerLink="/signin">Sign in</a></div>
-  </p-card>
+    >Sign Up</button>
+    <p class="text-white text-xs mt-1">Already have an account? <a class="text-purple-200 underline hover:text-purple-400" routerLink="/signin">Sign in</a></p>
+  </div>
 </form>

@@ -1,8 +1,8 @@
 <section class="text-gray-400 body-font bg-gray-900">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">Pitchfork Kickstarter Taxidermy</h1>
-      <p class="lg:w-1/2 w-full leading-relaxed text-opacity-80">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table.</p>
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">Your list of tasks to do</h1>
+      <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" [style]="{ textWrap: 'nowrap' }" class="flex mx-auto mt-16 text-white bg-purple-500 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded text-lg" type="button" (click)="toggleModal()">Add task to do</button>
     </div>
     <div class="flex flex-wrap -m-4">
       <div class="xl:w-1/3 md:w-1/2 p-4">
@@ -75,6 +75,65 @@
         </div>
       </div>
     </div>
-    <button [style]="{ textWrap: 'nowrap' }" class="flex mx-auto mt-16 text-white bg-purple-500 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded text-lg" (click)="logOut()">Sign out</button>
+
+    <!--@defer(on idle; prefetch on hover; prefetch on timer(5s)) {-->
+      <!--@if (showModal) {-->
+        <!-- Main modal -->
+        <div [style]="{ display:'flex', height:'100%', visibility:'hidden' }" id="crud-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+          <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative rounded-lg shadow bg-gray-700">
+              <!-- Modal header -->
+              <div class="flex items-center justify-between p-4 md:p-5 rounded-t border-gray-600">
+                <h3 class="text-lg font-semibold text-white">
+                  Create New Task
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" data-modal-toggle="crud-modal">
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" (click)="toggleModal()">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                  </svg>
+                  <span class="sr-only">Close modal</span>
+                </button>
+              </div>
+              <!-- Modal body -->
+              <form [formGroup]="taskForm" class="p-4 md:p-5">
+                <div class="grid gap-4 mb-4 grid-cols-2">
+                  <div class="col-span-2">
+                    <label for="name" class="block mb-2 text-sm font-medium text-white">Name</label>
+                    <input type="text" formControlName="name" name="name" id="name" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Type task name" required>
+                  </div>
+                  <div class="col-span-2">
+                    <label for="description" class="block mb-2 text-sm font-medium text-white">Task Description</label>
+                    <textarea id="description"  formControlName="description" rows="4" class="block p-2.5 w-full text-sm rounded-lg border bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-purple-500 focus:border-purple-500" placeholder="Write task description here"></textarea>
+                  </div>
+
+
+                  <div class="col-span-2">
+                    <input type="text"  formControlName="dueDate" class="form-control border text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-700 border-gray-600 placeholder-gray-400 text-white ring-purple-500 focus:border-purple-500" placeholder="Select due date"
+                     bsDatepicker [bsConfig]="{ isAnimated: true }" [(bsValue)]="myDateValue"
+                     (bsValueChange)="onValueChange($event)">
+                  </div>
+
+                  <div class="flex items-start mb-5">
+                    <div class="flex items-center h-5">
+                      <input id="is-done" type="checkbox" value="" class="w-4 h-4 border rounded focus:ring-3  bg-gray-700 border-gray-600 focus:ring-purple-600 ring-offset-gray-800 focus:ring-offset-gray-800" required>
+                    </div>
+                    <label for="is-done" class="ms-2 text-sm font-medium text-gray-300">Done ?</label>
+                  </div>
+
+                </div>
+                <button type="submit" class="text-white inline-flex items-center focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-800">
+                  <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                  Add new task
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <!--}-->
+    <!--} @placeholder (minimum 1ms) {
+      <div></div>
+    }-->
+
   </div>
 </section>

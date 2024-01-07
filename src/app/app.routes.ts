@@ -1,23 +1,26 @@
 import { Routes } from '@angular/router';
 import {TodoListComponent} from "./components/todo-list/todo-list.component";
-import {authGuard} from "./guards/auth.guard";
+import {authGuard} from "./guards/auth/auth.guard";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {SignInComponent} from "./components/sign-in/sign-in.component";
 import {SignUpComponent} from "./components/sign-up/sign-up.component";
 import {UnauthorizedComponent} from "./components/unauthorized/unauthorized/unauthorized.component";
 import {ContactComponent} from "./components/contact/contact.component";
 import {AboutComponent} from "./components/about/about.component";
+import {publicGuard} from "./guards/public/public.guard";
 
 export const routes: Routes = [
   {
     path: 'signin',
     title: 'Log in',
-    component: SignInComponent
+    component: SignInComponent,
+    canActivate: [publicGuard]
   },
   {
     path: 'signup',
     title: 'Register',
-    component: SignUpComponent
+    component: SignUpComponent,
+    canActivate: [publicGuard]
   },
   {
     path: 'todolist',

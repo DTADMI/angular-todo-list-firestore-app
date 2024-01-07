@@ -1,11 +1,13 @@
-import {Injectable, signal} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import {ToastService} from "../toast/toast.service";
+import {ALERT, ALERT_SEVERITY, AlertService} from "../alert/alert.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoggerService {
-  private successMessageSig = signal<string>("");
-  private errorMessageSig = signal<string>("");
+  protected alertService: AlertService = inject(AlertService);
+  protected toastService: ToastService = inject(ToastService);
 
   log(message: string) {
     console.log(message);
@@ -17,34 +19,8 @@ export class LoggerService {
     console.warn(message);
   }
 
-  getSuccessMessage() {
-    return this.successMessageSig();
-  }
-
-  getErrorMessage() {
-    return this.errorMessageSig();
-  }
-
-  setSuccessMessage(message: string) {
-    this.successMessageSig.set(message);
-    this.log(`Success message : ${message}`);
-  }
-
-  setErrorMessage(message: string) {
-    this.errorMessageSig.set(message);
-    this.error(`Error message : ${message}`);
-  }
-
-  clearSuccessMessage() {
-    this.successMessageSig.set("");
-  }
-
-  clearErrorMessage() {
-    this.errorMessageSig.set("");
-  }
-
-  clearAllMessages() {
-    this.clearSuccessMessage();
-    this.clearErrorMessage();
+  setMessage(severity: ALERT_SEVERITY, message: string) {
+    this.alertService.addAlert({severity, message} as ALERT);
+    this.log(`${severity} message : ${message}`);
   }
 }
