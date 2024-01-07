@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
 
   constructor() {
     //this.loaderService.showLoader();
-    this.authService.isUserLoggedInSig.set(this.authService.isUserLoggedIn());
+    this.authService.isUserLoggedInSig.set(!!this.authService.getAccessToken());
     console.log(`construct ${this.isUserAuthenticatedSig()}`);
   }
 
